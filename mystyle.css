@@ -1,5 +1,5 @@
 	header{
-			font-size : 16px;
+			font-size : 14px;
 			font-family : monospace;
 			border-style: dashed;
 			border-width: thin;
@@ -7,7 +7,7 @@
 			padding: 5px;
 				}
 		section{
-			font-size : 16px;
+			font-size : 14px;
 			background-color: "#fefefe";
 			border-style: dashed;
 			border-width: thin;
@@ -28,7 +28,7 @@
 			padding: 5px;
 			}
 		nav	{
-			font-size:16x;
+			font-size:14x;
 			border-style: dashed;
 			border-width: thin;
 			font-family : monospace;
