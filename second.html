@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+		<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<title>Guruprasad</title>
+	</head>
+
+	<body>
+		<header>
+			<h2>Centos 7</h2>
+		</header>
+	<nav> | <a href="index.html">Back</a> |</nav>	
+
+	<section>
+		<p>This article explains how to install and configure CENTOS on Desktop/Laptop. Though CENTOS is widely used for server applications, it can be an excellent choice for desktop also. CENTOS is a stable, sturdy OS, once configured properly, one can feel the power of true linux operating system.</p>
+		<p>CENTOS is acronym for Community Enterprise Operating System. It is sponsored by a well known corporate giant RED HAT. RED HAT produces the enterprise linux operating system known as RHEL. One has to pay for using RHEL and RED HAT provides customer support. However Linux operating system being an open source it has to release the source code to public. The same source code after removing red hat tags released as CENTOS. However of course, customer support will not be there. So one can enjoy enterprise standard linux operating system without any pay.</p>
+<p>CENTOS ISO images can be downloaded from www.centos.org. There are two options for download</p>
+<ol>
+<li>DVD</li>
+<li>minimal</li>
+</ol>
+<p>While minimal only installs core operating system without any GUI and applications, DVD has everything needed for a desktop and/or server system. It is always better to go for DVD option.</p>
+<p>Once ISO is burnt on a USB stick, boot desktop / Laptop from USB. CENTOS supports both UEFI enabled and legacy BIOS systems. CENTOS uses a GUI based installer called <em>anaconda</em>. Installation steps are given below -</p>
+<ol>
+<li>Select Time zone</li>
+<li>Select Key board Layout</li>
+<li>Make partition - Assign at least 20 GB for root partition [/] as ext4 file system and 2 GB for swap as Linux swap format. Optionally one can create partition for home folder. [For UEFI systems you have to create a less than 1 GB EFI partition as /boot/efi mount point]</li>
+<li>Software selection:<br />
+DVD contains two desktop environments namely GNOME and KDE. GNOME is used by a large number compared to KDE. In this article a GNOME version is explained. Following software packages are recommended for general computing.
+<ol>
+<li>Xorg libraries</li>
+<li>GNOME applications</li>
+<li>Network applications</li>
+<li>Office suite</li>
+<li>printer support</li>
+<li>Development tools</li>
+<li>Compatibility libraries</li>
+</ol></li>
+<li>Create user account and password.</li>
+</ol>
+<p>It may take 15 to 20 minutes depending on the system to complete the installation process.</p>
+<h4>Post-Installation Configuration</h4>
+<p>Make sure system is connected to a working internet connection. Since we have chosen network applications during installation process, ethernet, usb modem and many wire less modems will work out of box. For Ethernet proxy connection open terminal [Application-favorites-Terminal]and type [2]<br />
+<code>cd /etc </code>
+<code>sudo nano yum.conf</code><br />
+yum.conf file will be open in terminal itself and add <em>proxy=http://your proxy address:port/</em> line. save and exit. similarly add following lines in /etc/profile<br /><p>
+<code>export http_proxy=http://your proxy address:port/</code><br />
+<code>export https_proxy=http://your proxy address:port/</code><br />
+<code>export ftp_proxy=http://your proxy address:port/</code><br />
+<code>export HTTP_proxy=http://your proxy address:port/</code><br />
+<code>export HTTPS_proxy=http://your proxy address:port/</code><br />
+<code>export FTP_proxy=http://your proxy address:port/</code><br /></p>
+Finally add following lines in /etc/wgetrc file.
+<p><code>http_proxy=http://your proxy address:port/</code><br />
+<code>https_proxy=http://your proxy address:port/</code><br />
+<code>ftp_proxy=http://your proxy address:port/</code><br />
+<code>HTTP_proxy=http://your proxy address:port/</code><br />
+<code>HTTPS_proxy=http://your proxy address:port/</code><br />
+<code>FTP_proxy=http://your proxy address:port/</code></p>
+
+<h4>Yum and repositories Configuration</h4>
+<p>CENTOS by default has base, updates and extras repositories which contain many packages, however they may not be sufficient for a few applications. Hence following repositories need to be installed. All commands are typed in a terminal window . [2]</p>
+<ol>
+<li>EPEL repository<br />
+<code>sudo yum install epel-relase</code></li>
+<li>Nux desktop Repository<br />
+<code>wget http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm  rpm Uvh rpm -Uvh</code></li>
+<li>Remi Repository<br />
+<code>wget http://rpms.famillecollet.com/enterprise/remi-release-7.rpm  rpm -Uvh remi-release-7.rpm</code></li>
+</ol>
+<p>after installing above repositories, update the yum database by issuing <code>sudo yum update</code> command. It will suggest a list of packages for update. For the first update it may download 500 to 600 MB data however later updates will not take much.</p>
+
+<h4>Additional Software installation</h4>
+
+<h5>ntfs-3g</h5>
+To access the NTFS file system.<br />
+<code>sudo yum install ntfs-3g</code>
+
+<h5>yumex</h5>
+GUI for software installation.<br />
+<code>sudo yum install yumex</code>
+
+<h5 >multimedia</h5>
+To play audio and video files.<br />
+<code>yum install libdvdcss gstreamer-plugins-ugly gstreamer-plugins-bad-nonfree gstreamer-plugins-bad-freeworld</code>
+
+<h5>texmaker</h5>
+To create LATEX documents<br />
+<code>sudo yum install texmaker</code>
+
+<h5>kolourpaint</h5>
+MS-paint alternative.<br />
+<code>sudo yum install kolourpaint</code>
+
+<h5>Windows fonts</h5>
+<code>sudo yum install webcore</code>
+
+<h5> Gnome-tweak tool</h5>
+GUI for GNOME configuration<br />
+<code>sudo yum install gnome-tweak</code>
+
+<h5 >Wine</h5>
+<p>Wine is a software which allows user to run windows applications on linux. By default CENTOS does not support 32 bit wine. Where as many windows applications still use 32 bit for software build. To run 32 windows applications, Follow the steps given below [1] -</p>
+
+<p><code>yum install samba-winbind-clients -y </code><br/>
+<code> yum groupinstall Development Tools -y </code><br/>
+
+<code> yum install libjpeg-turbo-devel libtiff-devel freetype-devel -y </code> <br/>
+
+ <code> yum install glibc-devel{i686,x86_64} libgcc{i686,x86_64} libX11-devel{i686,x86_64} freetype-devel{i686,x86_64} gnutls- devel{i686,x86_64} libxml2-devel{i686,x86_64} libjpeg-turbo- devel{ i686,x86_64} libpng-devel{ i686,x86_64} libXrender-devel{i686,x86_64} alsa-lib-devel{i686,x86_64} -y </code><br/>
+
+ <code>cd /usr/src </code> <br/>
+
+ <code> wget http://dl.winehq.org/wine/source/1.8/wine-1.8.5.tar.bz2 </code> <br/>
+
+ <code> tar xjf wine-1.8.5.tar.bz2 </code> <br/>
+
+ <code> cd wine-1.8.5/ </code><br/>
+
+ <code> mkdir -p wine32 wine64  </code> <br/>
+
+ <code> cd wine64 </code> <br/>
+
+ <code> ./configure --enable-win64 </code><br/>
+
+ <code> make -j 4  </code> <br/>
+
+ <code>  cd ../wine32 && ./configure --with-wine64=../wine64 </code><br/>
+
+  <code> pmake -j &&  make install  </code> <br/>
+
+  <code>  cd ../wine64 && make install</code></p>
+
+
+
+<h5>Gnome shell extension</h5>
+Open yumex and search for "gnome-shell-extension-favorite-panel" and install it. It creates quick launches for favorite applications on the top panel.
+
+<h4>Conclusion</h4>
+<p>CENTOS is a beautiful, stable and user friendly linux distro. Font rendering and look and feel of CENTOS is superb. It uses gnome classic session by default and brings traditional authentic look with a touch of modern glamour to operating system. All applications which are required to a typical home and office usage are available in CENTOS. So why to waste money for commercial operating systems. Try Linux and feel the liberty!</p>
+<h5>References</h5>
+<ol type="1">
+<li><p>https://www.systutorials.com/239913/install-32-bit wine install<br />
+</p></li>
+<li><p>Centos wiki and other internet sources</p></li>
+</ol>
+	</section>	
+	</body>
+</html>
+
+
+
+
