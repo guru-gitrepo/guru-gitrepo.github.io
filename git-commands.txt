@@ -1,0 +1,7 @@
+git init
+git pull origin master
+git status
+git add .
+git commit -m "comment"
+git push origin master
+
