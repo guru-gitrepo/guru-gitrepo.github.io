@@ -1,37 +1,19 @@
-	header{
-			font-size : 14px;
-			font-family : monospace;
-			border-style: dashed;
-			border-width: thin;
-			margin: 0% 20% 0% 20%;
-			padding: 5px;
-				}
-		section{
-			font-size : 14px;
-			background-color: "#fefefe";
-			border-style: dashed;
-			border-width: thin;
+	body{
+			font-size : 100%;
+			background-color: "#fdf6e3";
+			line-height : 150%;
 			text-align: justify;
+			text-justify: inter-word;
 			font-family : monospace;
-			margin: 0% 20% 2% 20%;
+			margin: auto;
+			width: 50%;
 			padding: 5px;
 				}
-		h2 {
-		     color : black;
-			margin: 0% 20% 0% 0%;
-		}
-		footer {
-			font-size: 50%;
-			color: blue;
-			font-family : courier;
-			margin: 2% 20% 2% 20%;
-			padding: 5px;
-			}
-		nav	{
-			font-size:14x;
-			border-style: dashed;
-			border-width: thin;
-			font-family : monospace;
-			margin: 0% 20% 0% 20%;
-			padding: 5px;
-		}
+				nav{
+					font-size: 120%;}
+		h1{
+					font-size: 180%;}
+		h2{
+					font-size: 120%;}
+
+
