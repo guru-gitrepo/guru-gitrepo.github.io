@@ -1,74 +1,67 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<link rel="stylesheet" type="text/css" href="mystyle.css">
-
-	<title>Guruprasad</title>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="mystyle.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<title>Guruprasad</title>
 	</head>
-
 	<body>
 		<header>
-			<h2>Analog Circuit Simulation using NGSPICE</h2>
+			<h1>Analog Circuit Simulation using NGSPICE</h1>
 		</header>
-	<nav> | <a href="index.html">Back</a> |</nav>	
+		<nav> <a href="index.html">Back</a> </nav>	
 
-	<section>
-		<p>
-		The role of Electronics Design Automation tools in electronics circuit design and implementation is crucial.
-		The successful working o fabricated chip or PCB is mainly relay on the efficiency of EDA tools. SPICE tools
-		are one among different EDA tools. There are many free, open source and commercial SPICE tools available 
-		eg. LTspice, NGspice, Pspice, Winspice, smart spice, TINA TI spice, Multisim etc. In this article, a brief
-		tutorial on NGspice is presented. The syntax, structure of coding, model description, different analysis are 
-		explained with examples. The objective of the article is to make reader gets familiarised with basics of
-		NGspice and use it for simple analog circuit simulation.
-		</p>
-		<h4> Installation</h4>
-		Presently ngspice-26 version is avalilable. For windows users it can be downloaded from the below link-
-https://sourceforge.net/projects/ngspice/files/ng-spice-rework/26/
-For many Linux distroes, it is available in the respective OS main repositories. From package management
-software it can easily be installed. Ngspice is basically a command line driven spice engine though there are
-many graphical user interfaces available.
-<h4> Structure and Syntax</h4>
-<p>
-A spice code is written using a text editor [notepad or any linux text editors] and saved as name.cir or
-name.spi or name.ckt . Then the file is invoked from command prompt. The spice code can be run either in
-batch mode where soon after the program run, results are displayed or in interactive mode, in which after
-the program run, one has to write commands in the prompt to display the results. General stucture of code 
-<ol>
-	<li>Title of the code</li>
-	<li>Power supplies and excitation signals</li>
-	<li> Include the model le path [optional]</li>
-	<li> Statement explaining the interconnection of components</li>
-	<li> Subcircuit description [optional]</li>
-	<li>Control statements [optional]</li>
-	<li>end statement</li>
-</ol>
-The statements written after * are considered as comments.
-Following are a few examples of circuit description statements. For detailed explanation please refer the
-user manual.
-<ul>
-	<li><i>Voltage sources</i><br/>
-		<code>
-			DC:- Vname 1 2 dc=5 <br/>
-		AC:- Vname 1 2 dc=0 ac=1<br/>
-		Sine:- Vname 1 2 dc=0 ac=1 sin(startvalue peakvalue freq)<br/>
-Pulse:- Vname 1 2 dc=0 pulse(startvalue endvalue tdelay trise tfall Pw per)</code></li>
-	<p>
-	<li><i>Passive components</i><br/>
-		Resistor Rname 1 2 value<br/>
-		Capacitor Cname 1 2 value</li></p>
-	<p>
-	<li> <i>BJT</i><br/>
-		Qx coll base emitter Qname</li>
-	</p>
-	<p>
-	<li><i>MOSFET</i><br/>
-		Mx Drain Gate source bulk Mname</li>
-</ul>
-	</p>
-	====================================================
-	<h4> First Example</h4>
+		<section>
+			<p>
+			The role of Electronics Design Automation tools in electronics circuit design and implementation is crucial.
+			The successful working o fabricated chip or PCB is mainly relay on the efficiency of EDA tools. SPICE tools
+			are one among different EDA tools. There are many free, open source and commercial SPICE tools available 
+			eg. LTspice, NGspice, Pspice, Winspice, smart spice, TINA TI spice, Multisim etc. In this article, a brief
+			tutorial on NGspice is presented. The syntax, structure of coding, model description, different analysis are 
+			explained with examples. The objective of the article is to make reader gets familiarised with basics of
+			NGspice and use it for simple analog circuit simulation.
+			</p>
+			<h2> Installation</h2>
+			<p>
+			Presently ngspice-26 version is avalilable. For windows users it can be downloaded from the below link-
+			https://sourceforge.net/projects/ngspice/files/ng-spice-rework/26/
+			For many Linux distroes, it is available in the respective OS main repositories. From package management
+			software it can easily be installed. Ngspice is basically a command line driven spice engine though there are
+			many graphical user interfaces available.
+			<h2> Structure and Syntax</h2>
+			<p>
+			A spice code is written using a text editor [notepad or any linux text editors] and saved as name.cir or
+			name.spi or name.ckt . Then the file is invoked from command prompt. The spice code can be run either in
+			batch mode where soon after the program run, results are displayed or in interactive mode, in which after
+			the program run, one has to write commands in the prompt to display the results. General stucture of code </p>
+				<ol>
+					<li>Title of the code</li>
+					<li>Power supplies and excitation signals</li>
+					<li> Include the model path [optional]</li>
+					<li> Statement explaining the interconnection of components</li>
+					<li> Subcircuit description [optional]</li>
+					<li>Control statements [optional]</li>
+					<li>end statement</li>
+				</ol>
+			<p>The statements written after * are considered as comments. Following are a few examples of circuit description statements. For detailed 
+			explanation please refer the user manual.</p>
+				<ul>
+					<li><i>Voltage sources</i>
+					<code>DC:- Vname 1 2 dc=5 <br/>
+					AC:- Vname 1 2 dc=0 ac=1<br/>
+					Sine:- Vname 1 2 dc=0 ac=1 sin(startvalue peakvalue freq)<br/>
+					Pulse:- Vname 1 2 dc=0 pulse(startvalue endvalue tdelay trise tfall Pw per)</code></li>
+					<li><i>Passive components</i><br/>
+					Resistor Rname 1 2 value<br/>
+					Capacitor Cname 1 2 value</li>
+					<li> <i>BJT</i><br/>
+					Qx coll base emitter Qname</li>
+					<li><i>MOSFET</i><br/>
+					Mx Drain Gate source bulk Mname</li>
+				</ul>
+		====================================================
+			<h2> First Example</h2>
 <pre>
   1                             2
   +-------------vvv-------------+
@@ -80,7 +73,7 @@ Pulse:- Vname 1 2 dc=0 pulse(startvalue endvalue tdelay trise tfall Pw per)</cod
                  0
      First Order RC network                 
 	</pre>
-<pre><code>
+<pre>
 *First program in NG-spice
 Vin 1 0 dc=0 ac=1
 R1 1 2 1k
@@ -92,10 +85,10 @@ run
 plot 20*log(v(2))
 .endc
 .end
-</code></pre>
-<img src="figs/res1.png" alt="Frequency response" width="300" height="300">
-<br/>        =====================================================<br/>
-<h4> Second Example</h4>
+</pre>
+			<img src="figs/res1.png" alt="Frequency response" width="300" height="300">
+			<br/>        =====================================================<br/>
+			<h2> Second Example</h2>
 <pre>
   1                             2
   +-------------D|--------------+
@@ -108,7 +101,7 @@ plot 20*log(v(2))
                  0
      First Order RC network                 
 	</pre>
-	<pre><code>
+	<pre>
 *Second program in NG-spice
 Vin 1 0 dc=0 ac=5 sin(0 5 1k)
 D1 1 2 mydio
@@ -120,16 +113,16 @@ tran 0.1m 2m
 run
 plot v(2)
 .end
-	</code></pre>
-<img src="figs/res2.png" alt="Frequency response" width="300" height="300">
+	</pre>
+			<img src="figs/res2.png" alt="Frequency response" width="300" height="300">
 
-	<p>
-	In the above example, a diode is used whose model is explained in .model statement. IS refers to reverse
-       	saturation current and VJ refers junction potential voltage. The detailed model le of a diode can be
-	obtained from a spice manual. In control statement tran 0.1m 2m performs transient analysis fro 0s to 2ms
-	with a step size of 0.1ms.</p>
+			<p>
+				In the above example, a diode is used whose model is explained in .model statement. IS refers to reverse
+			       	saturation current and VJ refers junction potential voltage. The detailed model of a diode can be
+				obtained from a spice manual. In control statement tran 0.1m 2m performs transient analysis fro 0s to 2ms
+				with a step size of 0.1ms.</p>
 
-<h4> Third Example </h4>
+			<h2> Third Example </h2>
 <pre>
             VCC
             ---
@@ -148,7 +141,7 @@ plot v(2)
 ---         ---
 
 </pre>
-<pre><code>
+<pre>
 *Third program in NG-spice
 Vcc 3 0 dc=10
 Vin 4 0 0.8
@@ -164,24 +157,23 @@ run
 plot i(vdummy)
 .endc
 .end
-</code></pre>
-
-<img src="figs/res3.png" alt="Frequency response" width="300" height="300"> <br/>
-<p>
-In NGspice we can not plot current through components other than voltage source. Hence a zero voltage
-source is added in series with collector resistor. A model statement is added to describe the model of a
-typical npn BJT. Refer the spice manual for detailed explanation of each parameters listed in the model
-statement.
-In the control section, a nested DC sweep statement is added. Initially vin is kept at 0.7 V and Vcc is
-varied from 0V to 10V in step of 1 V and collector current is plotted. Then vin is increased by 0.1 V and
-again Vcc is varied, current curve is plotted. Like this, current curves are plotted for different values of vin
-as shown in Figure.</p>
-<p>
-In this short tutorial, Simulation of basic electronic circuits using NGspice has been explained with examples.
-Ngspice is a very powerful tool, many complexed circuit analysis, optimization, statistical analysis etc can
-realised.
-</p>
-	</section>	
+</pre>
+			<img src="figs/res3.png" alt="Frequency response" width="300" height="300"> <br/>
+			<p>
+				In NGspice we can not plot current through components other than voltage source. Hence a zero voltage
+				source is added in series with collector resistor. A model statement is added to describe the model of a
+				typical npn BJT. Refer the spice manual for detailed explanation of each parameters listed in the model
+				statement. In the control section, a nested DC sweep statement is added. Initially vin is kept at 0.7 V and Vcc is
+				varied from 0V to 10V in step of 1 V and collector current is plotted. Then vin is increased by 0.1 V and
+				again Vcc is varied, current curve is plotted. Like this, current curves are plotted for different values of vin
+				as shown in Figure.
+			</p>
+			<p>
+				In this short tutorial, Simulation of basic electronic circuits using NGspice has been explained with examples.
+				Ngspice is a very powerful tool, many complexed circuit analysis, optimization, statistical analysis etc can
+				realised.
+			</p>
+		</section>	
 	</body>
 </html>
 
