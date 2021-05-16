@@ -4,22 +4,23 @@ body{
 	line-height : 150%;
 	text-align: justify;
 	text-justify: inter-word;
-	font-family : monospace;
+	font-family : courier-new, monospace;
 	width : 90%;
 	margin: auto;
 	padding: 5px;
 }
 nav{
-	font-size: 120%;
+	font-size: 110%;
 }
 h1{
-	font-size: 180%;
+	font-size: 150%;
 }
 h2{
-	font-size: 120%;
+	font-size: 110%;
 }
 
 footer{
 	text-align:center;
+	font-size:80%;
 }
 
