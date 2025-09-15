@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.1.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre class="western">			ANTIX LINUX SETUP GUIDE
+			-----------------------
+
+-- First Download Antix-core iso and burn it on a pendrive using dd command. Do not
+use isohybrid.
+
+-- If you want to install it alongside windows, it is better to install it on a
+separate EFI partition. So that it will not be overwritten during the windows
+update. Here is my system partition -
+
+Number  Start   End    Size    File     Name                      Flags
+----------------------------------------------------------------------------------
+ 1      1049kB  106MB  105MB   fat32    EFI system partition         boot,esp
+ 2      106MB   123MB  16.8MB           Microsoft reserved partition msftres
+ 3      123MB   246GB  246GB   ntfs     Basic data partition         msftdata
+ 4      500GB   500GB  556MB   ntfs                                  hidden, diag
+ 5      246GB   247GB  1074MB  fat32    EFI System Partition         boot,esp
+ 6      247GB   248GB  1074MB  ext4     Swap partition               swap
+ 7      248GB   500GB  252GB   ext4     Linux root
+
+ 5,6,7 are for linux. 
+
+-- While installing select Microsoft 104/105 key board layout or else it gives
+error in future
+
+-- In core installation, only kernel, wpa supplicant and other basic GNU tools
+will be installed. 
+
+-- First install xorg-server, xserver-xorg-video-intel, xorg-fonts, libx11-dev
+libxft-dev libxinerama-dev libxrandr-dev libxkbcommon-dev build-essential
+
+-- I prefer window manager instead of desktop environment. So I suggest you to
+install following 
+	* st - Minimalist terminal
+	* dmenu - application launcher
+	* dwm - Tiling window manager
+	* herbe - notification app
+	* scrot - screenshot app
+	* xpdf - pdf reader
+	* mocp - minimalist music player
+	* bluez bluez-tools - bluetooth
+	* mpv - video player
+	* redshift - blue light filter
+	* xbacklight - screen brightness
+	* go-mtpfs - mobile access
+	* feh - image viewer
+	* gv - ps viewer
+	* xfe - file manager (optional)
+
+-- Basic configuration files
+
+###################################################################################
+=&gt; ~/.xinitrc
+
+#!/usr/bin/bash
+
+# Set LED backlight
+xbacklight -set 5
+
+# Correction for Java applications
+wmname LG3D 2
+export AWT_TOOLKIT=MToolkit
+
+# Script for monitoring and displaying battery, volume and time information
+while true; do
+        CHR=$(cat /sys/class/power_supply/BAT0/status)
+
+        if [ &quot;$CHR&quot; = &quot;Discharging&quot; ]
+        then
+                herbe &quot;BATTERY IS DOWN&quot;
+        fi
+
+        CLK=$( date +'%I:%M')
+        volume=$(amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 |
+cut -d '%' -f 1)
+        xsetroot -name &quot;| vol:$volume% | $CLK  &quot;
+        sleep 2
+done &amp;
+
+redshift -P -O 3000 &amp;&amp; sleep 1
+
+# Desktop background
+xsetroot -solid '#000000'
+
+# xset dpms 300 400 500; # To trun off display after 5 minutes inactive
+# xss-lock -- sh -c 'echo mem | sudo tee /sys/power/state'
+# 2&gt;/dev/null &amp;   # To suspend after 10 minutes
+
+exec dwm
+
+######################################################################################
+
+~/.aliases
+
+# custom commands
+alias ..='cd ..'
+alias rm=&quot;rm -i&quot;
+alias x=&quot;exit&quot;
+alias re=&quot;sudo reboot&quot;
+alias off=&quot;sudo poweroff&quot;
+alias l=&quot;/bin/ls -1&quot;
+alias ll=&quot;/bin/ls -la&quot;
+alias mount=&quot;sudo mount -o umask=000 /dev/sdb1 /mnt/USB&quot;
+alias umount=&quot;sudo umount /dev/sdb1&quot;
+alias install=&quot;sudo apt install&quot;
+alias update=&quot;sudo apt update&quot;
+alias upgrade=&quot;sudo apt upgrade&quot;
+alias remove=&quot;sudo apt remove&quot;
+alias display_off=&quot;xrandr --output eDP1 --off&quot;
+alias hdmi=&quot;xrandr --output HDMI1 --auto&quot;
+alias phone=&quot;go-mtpfs ~/MOBILE &amp;&quot;
+alias phone_exit=&quot;fusermount -u ~/MOBILE&quot;
+alias s=&quot;startx&quot;
+alias -- -=&quot;cd -&quot;
+alias red=&quot;redshift -O 4000&quot;
+alias tree=&quot;unset LS_COLORS &amp;&amp; tree&quot;
+alias bt=&quot;bluetooth&quot;
+alias sp=&quot;echo mem | sudo tee /sys/power/state&quot;
+
+# Programs
+alias v=&quot;vim&quot;
+alias xp=&quot;xpdf&quot;
+
+# Bookmarks
+alias win=&quot;cd /mnt/WINDOWS/&quot;
+alias movies=&quot;cd /mnt/WINDOWS/Users/admin/Videos&quot;
+alias d=&quot;cd /mnt/WINDOWS/Users/admin/Documents/DATA-1&quot;
+alias h=&quot;cd /mnt/WINDOWS/Users/admin&quot;
+alias dw=&quot;cd ~/Downloads&quot;
+alias usb=&quot;cd /mnt/USB&quot;
+
+###############################################################################
+
+~/.bashrc
+
+source .aliases
+export PS1=&quot;\w $:&quot;
+export PATH=$PATH:~/.local/bin
+export EDITOR=vim
+
+###############################################################################
+
+# ~/.bash_profile
+
+# Load .bashrc for consistency
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+# Start X only if we're on the first TTY (ctrl+alt+F1)
+if [[ -z $DISPLAY ]] &amp;&amp; [[ $(tty) == /dev/tty1 ]]; then
+    exec startx
+fi
+
+###############################################################################
+~/.config/redshift/redshift.conf
+
+[redshift]
+location-provider=manual
+
+[manual]
+lat=0.0
+lon=0.0
+###############################################################################
+
+~/.config/mpv/input.conf
+
+# --- Volume ---
+UP      add volume 5        # increase volume
+DOWN    add volume -5       # decrease volume
+m       cycle mute           # toggle mute
+
+# --- Subtitle ---
+s     cycle sub            # cycle subtitle tracks
+v     cycle sub-visibility # toggle subtitles on/off
+
+# --- Audio track ---
+a     cycle audio          # cycle audio tracks
+
+# --- Playback ---
+SPACE     cycle pause          # pause / play
+f         cycle fullscreen     # toggle fullscreen
+q         quit                 # quit mpv
+
+###############################################################################
+
+!/.config/mpv/mpv.conf
+
+# to disable auto turnoff display
+
+stop-screensaver=yes
+
+###############################################################################
+
+Custom script for wifi connection
+
+$ net &lt;name&gt;
+
+~/.local/bin/net
+#!/bin/bash
+# Simple Wi-Fi switcher for home/office
+# Requires: wpa_supplicant, dhclient
+
+IFACE=&quot;wlan0&quot;
+
+# clear previous records
+reset_iface() {
+    sudo killall wpa_supplicant dhclient 2&gt;/dev/null
+    sudo ip link set $IFACE down
+    sleep 1
+    sudo ip link set $IFACE up
+    sleep 1
+}
+
+case &quot;$1&quot; in
+
+moto)
+echo &quot;[*] Connecting to Moto WiFi...&quot;
+    reset_iface
+    sudo wpa_supplicant -B -i $IFACE -c
+/etc/wpa_supplicant/wpa_supplicant-moto.conf
+    sudo dhclient $IFACE
+    ;;
+
+vivo)
+echo &quot;[*] Connecting to Vivo WiFi...&quot;
+    reset_iface
+    sudo wpa_supplicant -B -i $IFACE -c
+/etc/wpa_supplicant/wpa_supplicant-vivo.conf
+    sudo dhclient $IFACE
+    ;;
+
+cable)
+echo &quot;[*] Connecting to Cable WiFi...&quot;
+    reset_iface
+    sudo wpa_supplicant -B -i $IFACE -c
+/etc/wpa_supplicant/wpa_supplicant-cable.conf
+    sudo dhclient $IFACE
+    ;;
+*)
+echo &quot;Usage: wifi {moto|vivo|cable}&quot;
+;;
+esac
+
+###########################################################################
+
+In /etc/wpa_supplicant/wpa_supplicant-name.conf
+
+ctrl_interface=/run/wpa_supplicant
+network={
+    ssid=&quot;xyz&quot;
+    psk=&quot;password&quot;
+}
+
+##########################################################################
+
+custom script for bluetooth connection
+~/.local/bin/bt
+
+#!/bin/bash
+# Connect to bluetooth device using bluetoothctl
+
+DEVICE=&quot;8C:8E:40:C0:AF:00&quot;
+
+bluetoothctl&lt;&lt;EOF
+power on
+remove $DEVICE
+sleep 1
+agent on
+default-agent
+scan on
+sleep 2
+pair $DEVICE
+sleep 2
+trust $DEVICE
+sleep 1
+connect $DEVICE
+sleep 2
+quit
+EOF
+
+#############################################################################
+
+Config file for theme and single column layout for moc
+
+Theme =  black_theme
+ Layout1 = playlist(50%,50%,50%,50%)
+ Layout2 = &quot;&quot;
+ Layout3 = &quot;&quot;
+
+##############################################################################
+
+Grub configuration for simple layout - 
+-- sudo chmod -x 05_debian_theme 20_memtest86+ 30_uefi-firmware
+-- Edit menu names in /boot/grub/grub.cfg
+-- Edit /etc/default/grub file
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR=`grep PRETTY_NAME /etc/lsb-release | cut -d= -f2 | cut -d\&quot; -f2
+2&gt; /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet selinux=0&quot;
+GRUB_CMDLINE_LINUX=&quot;&quot;
+GRUB_TERMINAL=console
+GRUB_DISABLE_SUBMENU=y
+
+-- Run sudo update-grub
+
+###############################################################################
+
+To acess phone memory 
+-- install go-mtpfs, libmtp
+-- create a folder preferably in home directory for mounting
+-- Use alias - phone_mount and phone_umount
+-- Create/update /etc/udev/rules.d/51-android.rules
+
+SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;22b8&quot;, ATTR{idProduct}==&quot;2e82&quot;, MODE=&quot;0666&quot;,
+GROUP=&quot;plugdev&quot;
+
+##############################################################################
+
+To make xbacklight working
+-- Create a file in /etc/X11/xorg.conf.d/20-video.conf
+-- Write 
+Section &quot;Device&quot;
+    Identifier  &quot;Intel Graphics&quot;
+    Driver      &quot;intel&quot;
+    Option      &quot;Backlight&quot;  &quot;intel_backlight&quot;
+EndSection
+
+###############################################################################
+
+To enable tap on click for touchpad
+-- install xserver-xorg-input-synaptics
+-- Edit/create file /etc/X11/xorg.conf.d/synaptic.conf
+Section &quot;InputClass&quot;
+        Identifier      &quot;Touchpad&quot;                      # required
+        MatchIsTouchpad &quot;yes&quot;                           # required
+        Driver          &quot;synaptics&quot;                     # required
+        Option          &quot;MinSpeed&quot;              &quot;0.5&quot;
+        Option          &quot;MaxSpeed&quot;              &quot;1.0&quot;
+        Option          &quot;AccelFactor&quot;           &quot;0.075&quot;
+        Option          &quot;TapButton1&quot;            &quot;1&quot;
+        Option          &quot;TapButton2&quot;            &quot;2&quot;     # multitouch
+        Option          &quot;TapButton3&quot;            &quot;3&quot;     # multitouch
+        Option          &quot;VertTwoFingerScroll&quot;   &quot;1&quot;     # multitouch
+        Option          &quot;HorizTwoFingerScroll&quot;  &quot;1&quot;     # multitouch
+        Option          &quot;VertEdgeScroll&quot;        &quot;1&quot;
+        Option          &quot;CoastingSpeed&quot;         &quot;8&quot;
+        Option          &quot;CornerCoasting&quot;        &quot;1&quot;
+        Option          &quot;CircularScrolling&quot;     &quot;1&quot;
+        Option          &quot;CircScrollTrigger&quot;     &quot;7&quot;
+        Option          &quot;EdgeMotionUseAlways&quot;   &quot;1&quot;
+        Option          &quot;LBCornerButton&quot;        &quot;8&quot;     # browser &quot;back&quot; btn
+        Option          &quot;RBCornerButton&quot;        &quot;9&quot;     # browser &quot;forward&quot; btn
+EndSection
+
+###############################################################################
+
+For mounting USB when plugged and Windows partition during boot
+
+-- Use alias usb_mount/umount
+alias usb_mount=&quot;sudo mount -o umask=000 /dev/sdb1 /mnt/USB&quot;
+alias usb_umount=&quot;sudo umount /dev/sdb1&quot;
+-- Edit /etc/fstab 
+UUID=XXXX /mnt/WINDOWS ntfs-3g defaults,noatime,uid=1000,gid=1000,umask=022 0 0
+
+###############################################################################
+
+Keep only following daemons in run level 2 (run sysv-rc-conf)
+
+--bluetooth
+--dbus
+--pulseaudio
+--rc.local
+--seatd
+--sudo
+--tlp
+
+###############################################################################
+
+dwm setup file - config.h
+
+/* appearance */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 32;       /* snap pixel */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 0;        /* 0 means bottom bar */
+static const char *fonts[]          = { &quot;ubuntu mono:size=12&quot; };
+static const char dmenufont[]       = &quot;ubuntu mono:size=12&quot;;
+static const char col_gray1[]       = &quot;#222222&quot;;
+static const char col_gray2[]       = &quot;#444444&quot;;
+static const char col_gray3[]       = &quot;#bbbbbb&quot;;
+static const char col_gray4[]       = &quot;#eeeeee&quot;;
+static const char col_cyan[]        = &quot;#005577&quot;;
+static const char *colors[][3]      = {
+        /*               fg         bg         border   */
+        [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+        [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+};
+
+/* tagging */
+static const char *tags[] = { &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot; };
+
+static const Rule rules[] = {
+        /* xprop(1):
+         *      WM_CLASS(STRING) = instance, class
+         *      WM_NAME(STRING) = title
+         */
+        /* class      instance    title       tags mask     isfloating   monitor
+ * */
+        { &quot;Gimp&quot;,     NULL,       NULL,       0,            1,           -1 },
+        { &quot;Firefox&quot;,  NULL,       NULL,       1 &lt;&lt; 8,       0,           -1 },
+};
+
+/* layout(s) */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95]
+*/
+static const int nmaster     = 1;    /* number of clients in master area */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled
+resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen
+window */
+
+static const Layout layouts[] = {
+        /* symbol     arrange function */
+        { &quot;[]=&quot;,      tile },    /* first entry is default */
+        { &quot;&gt;&lt;&gt;&quot;,      NULL },    /* no layout function means floating behavior
+*/
+        { &quot;[M]&quot;,      monocle },
+};
+
+/* key definitions */
+#define MODKEY Mod1Mask
+#define TAGKEYS(KEY,TAG) \
+        { MODKEY,                       KEY,      view,           {.ui = 1 &lt;&lt;
+TAG} }, \
+        { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 &lt;&lt;
+TAG} }, \
+        { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 &lt;&lt;
+TAG} }, \
+        { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 &lt;&lt;
+TAG} },
+
+/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+#define SHCMD(cmd) { .v = (const char*[]){ &quot;/bin/sh&quot;, &quot;-c&quot;, cmd, NULL } }
+/* commands */
+static char dmenumon[2] = &quot;0&quot;; /* component of dmenucmd, manipulated in spawn()
+*/
+static const char *dmenucmd[] = { &quot;dmenu_run&quot;, &quot;-m&quot;, dmenumon, &quot;-fn&quot;, dmenufont,
+&quot;-nb&quot;, col_gray1, &quot;-nf&quot;, col_gray3, &quot;-sb&quot;, col_cyan, &quot;-sf&quot;, col_gray4, NULL };
+static const char *termcmd[]  = { &quot;st&quot;, NULL };
+static const char *browsercmd[]= {&quot;chromium&quot;,NULL};
+static const char *fmcmd[] = { &quot;xfe&quot;, NULL };
+static const char *htopcmd[] = { &quot;st&quot;, &quot;-e&quot;, &quot;htop&quot;, NULL };
+static const char *mocpcmd[] = { &quot;st&quot;, &quot;-e&quot;, &quot;mocp&quot;, NULL };
+static const char *volup[] = { &quot;amixer&quot;, &quot;set&quot;, &quot;Master&quot;, &quot;5%+&quot;, NULL };
+static const char *voldown[] = { &quot;amixer&quot;, &quot;set&quot;, &quot;Master&quot;, &quot;5%-&quot;, NULL };
+static const char *brtup[] = { &quot;xbacklight&quot;, &quot;-inc&quot;,&quot;5&quot;, NULL };
+static const char *brtdown[] = { &quot;xbacklight&quot;, &quot;-dec&quot;,&quot;5&quot;, NULL };
+static const char *lock[] = { &quot;st&quot;, &quot;-e&quot;, &quot;slock&quot; };
+static const char *scrotcmd[]  = { &quot;scrot&quot;, &quot;-t&quot;, &quot;25&quot;, NULL };
+static const char *scrotfocusedcmd[]  = { &quot;scrot&quot;, &quot;--focused&quot;, NULL };
+
+static Key keys[] = {
+        /* modifier                     key        function        argument */
+        { MODKEY,                       XK_d,      spawn,          {.v =
+dmenucmd } },
+        { MODKEY          ,             XK_Return, spawn,          {.v = termcmd
+} },
+        { MODKEY,                       XK_b,      togglebar,      {0} },
+        { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+        { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+        { MODKEY,                       XK_w,      incnmaster,     {.i = +1 } },
+        { MODKEY|ShiftMask,             XK_w,      incnmaster,     {.i = -1 } },
+        { MODKEY,                       XK_h,      setmfact,       {.f = -0.05}
+},
+        { MODKEY,                       XK_l,      setmfact,       {.f = +0.05}
+},
+        { MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+        { MODKEY,                       XK_Tab,    view,           {0} },
+        { MODKEY,                       XK_q,      killclient,     {0} },
+        { MODKEY,                       XK_t,      setlayout,      {.v =
+&amp;layouts[0]} },
+        { MODKEY,                       XK_m,      setlayout,      {.v =
+&amp;layouts[1]} },
+        { MODKEY,                       XK_f,      setlayout,      {.v =
+&amp;layouts[2]} },
+        { MODKEY,                       XK_space,  setlayout,      {0} },
+        { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+        { MODKEY,                       XK_0,      view,           {.ui = ~0 }
+},
+        { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 }
+},
+        { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+        { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+        { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+        { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+        { MODKEY,                       XK_s,      spawn,          SHCMD(&quot;echo
+mem | sudo tee /sys/power/state&quot;) },
+        { MODKEY,                       XK_i,            spawn, {.v = browsercmd
+} },
+        { MODKEY|ShiftMask,             XK_x,            spawn, {.v = lock } },
+        { MODKEY,                       XK_p,            spawn, {.v = fmcmd } },
+        { MODKEY,                       XK_o,            spawn, {.v = htopcmd }
+},
+        { MODKEY,                       XK_z,            spawn, {.v = mocpcmd }
+},
+        { MODKEY,                       XK_Up,           spawn, {.v = volup } },
+        { MODKEY,                       XK_Down,         spawn, {.v = voldown }
+},
+        { MODKEY,                       XK_8,           spawn, {.v = brtup } },
+        { MODKEY,                       XK_9,           spawn, {.v = brtdown }
+},
+        TAGKEYS(                        XK_1,                      0)
+        TAGKEYS(                        XK_2,                      1)
+        TAGKEYS(                        XK_3,                      2)
+        TAGKEYS(                        XK_4,                      3)
+        TAGKEYS(                        XK_5,                      4)
+        TAGKEYS(                        XK_6,                      5)
+        { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+        { 0,            XK_Print,   spawn,      {.v = scrotcmd } },
+        { ShiftMask,    XK_Print,   spawn,      {.v = scrotfocusedcmd } },
+        { ControlMask,  XK_Print,   spawn,      SHCMD(&quot;sleep 1s;scrot --select&quot;)
+},
+
+};
+
+
+/* button definitions */
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+ * ClkClientWin, or ClkRootWin */
+static const Button buttons[] = {
+        /* click                event mask      button          function
+ * argument */
+        { ClkLtSymbol,          0,              Button1,        setlayout,
+{0} },
+        { ClkLtSymbol,          0,              Button3,        setlayout,
+{.v = &amp;layouts[2]} },
+        { ClkWinTitle,          0,              Button2,        zoom,
+{0} },
+        { ClkStatusText,        0,              Button2,        spawn,
+{.v = termcmd } },
+        { ClkClientWin,         MODKEY,         Button1,        movemouse,
+{0} },
+        { ClkClientWin,         MODKEY,         Button2,        togglefloating,
+{0} },
+        { ClkClientWin,         MODKEY,         Button3,        resizemouse,
+{0} },
+        { ClkTagBar,            0,              Button1,        view,
+{0} },
+        { ClkTagBar,            0,              Button3,        toggleview,
+{0} },
+        { ClkTagBar,            MODKEY,         Button1,        tag,
+{0} },
+        { ClkTagBar,            MODKEY,         Button3,        toggletag,
+{0} },
+};
+
+#################################################################################
+
+# Configure mutt for gmail with 2FA. Generate app password from google account
+
+# Install mutt msmtp
+
+~/.muttrc
+
+# Identity
+set realname = &quot;Guruprasad&quot;
+set from = &quot;guruprasad.here@gmail.com&quot;
+set use_from = yes
+
+# IMAP
+set imap_user = &quot;guruprasad.here@gmail.com&quot;
+set imap_pass = &quot;mxyl kudf hten ahrn&quot;
+set folder = &quot;imaps://imap.gmail.com/&quot;
+set spoolfile = &quot;+INBOX&quot;
+
+# SMTP (delegates to msmtp)
+set sendmail = &quot;/usr/bin/msmtp&quot;
+
+set signature=&quot;Guruprasad&quot;
+set postponed = +Drafts
+set record = +Sent
+set mailcap_path   = ~/.mutt/mailcap
+auto_view text/html
+alternative_order text/plain text/html
+set sort_aux=last-date-received
+
+~/.config/msmtp/config
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.msmtp.log
+
+account gmail
+host smtp.gmail.com
+port 587
+from guruprasad.here@gmail.com
+user guruprasad.here@gmail.com
+password mxyl kudf hten ahrn
+
+account default : gmail
+
+# chmod 600 ~/.muttrc ~/.config/msmtp/config
+
+#############################################################################</pre>
+</body>
+</html>
