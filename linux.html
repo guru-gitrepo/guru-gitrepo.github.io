@@ -7,60 +7,122 @@
 		<title>Guruprasad</title>
 	</head>
  <nav>  <a href="blog.html">Back</a> </nav>
-<pre>
-			ANTIX LINUX SETUP GUIDE
-			-----------------------
--- First Download Antix-core iso and burn it on a pendrive using dd command. Do not
-use isohybrid.
+	<header>
+		<h1> Antix Linus Setup Guide</h1>
+	</header>
 
--- If you want to install it alongside windows, it is better to install it on a
-separate EFI partition. So that it will not be overwritten during the windows
-update. Here is my system partition -
+	<ul>
+	<li> First Download Antix-core iso and burn it on a pendrive using dd command. Do not
+		use isohybrid.</li>
 
-Number  Start   End    Size    File     Name                      Flags
-----------------------------------------------------------------------------------
- 1      1049kB  106MB  105MB   fat32    EFI system partition         boot,esp
- 2      106MB   123MB  16.8MB           Microsoft reserved partition msftres
- 3      123MB   246GB  246GB   ntfs     Basic data partition         msftdata
- 4      500GB   500GB  556MB   ntfs                                  hidden, diag
- 5      246GB   247GB  1074MB  fat32    EFI System Partition         boot,esp
- 6      247GB   248GB  1074MB  ext4     Swap partition               swap
- 7      248GB   500GB  252GB   ext4     Linux root
+	<li> If you want to install it alongside windows, it is better to install it on a
+	separate EFI partition. So that it will not be overwritten during the windows
+	update. Here is my system partition -</li>
 
+<table  cellpadding="3" cellspacing="0" width="70%" >
+	<thead>
+	<tr>
+		<th> Number </th>
+		<th> Start </th>
+		<th> End </th>
+		<th> Size </th>
+		<th> File </th>
+		<th> Name	</th>
+		<th> Flags </th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	<tr>
+		<td>	 1  </td>  <td>  1049kB  </td> <td> 106MB </td>  <td> 105MB
+		</td>  <td> fat32 </td>   <td>  EFI system partition  </td>   <td>
+		boot,esp </td> 
+	</tr>
+
+	<tr>
+		<td>2 </td> <td>     106MB  </td> <td>  123MB  </td> <td> 16.8MB </td>
+		<td> </td> <td>  Microsoft reserved partition 	</td> <td>  msftres  </td>
+	</tr>
+	
+	<tr>
+		<td> 3 </td> <td> 123MB </td> <td>   246GB </td> <td>  246GB </td> <td>   ntfs
+		</td> <td>Basic data partition  </td> <td> msftdata </td>
+	</tr>
+
+	<tr>
+		 <td> 4  </td> <td>     500GB  </td> <td>  500GB  </td> <td> 556MB  </td>
+		 <td>  ntfs </td> <td></td><td>      hidden, diag</td>
+	</tr>
+
+	<tr>
+		<td>5 </td> <td>  246GB  </td> <td>  247GB  </td> <td> 1074MB </td><td> fat32
+		</td><td>EFI System Partition </td><td>        boot,esp</td>
+	 </tr>
+
+	 <tr> 
+		 <td> 6  </td> <td> 247GB </td> <td> 248GB  </td> <td> 1074MB </td> <td>  ext4
+		 </td> <td>    Swap partition  </td> <td>  swap</td>
+ 	</tr>
+
+	 <tr>
+		 <td> 7 </td>  <td> 248GB  </td> <td>  500GB  </td> <td> 252GB  </td> <td>
+		 ext4  </td> <td>    Linux root</td>
+	</tr>
+	</tbody>
+</table>
  5,6,7 are for linux. 
 
--- While installing select Microsoft 104/105 key board layout or else it gives
-error in future
+	<li>While installing select Microsoft 104/105 key board layout or else it gives
+	error in future </li>
 
--- In core installation, only kernel, wpa supplicant and other basic GNU tools
-will be installed. 
+	<li> In core installation, only kernel, wpa supplicant and other basic GNU tools
+	will be installed. </li>
 
--- First install xorg-server, xserver-xorg-video-intel, xorg-fonts, libx11-dev
-libxft-dev libxinerama-dev libxrandr-dev libxkbcommon-dev build-essential
+	<li>First install xorg-server, xserver-xorg-video-intel, xorg-fonts, libx11-dev
+	libxft-dev libxinerama-dev libxrandr-dev libxkbcommon-dev
+	build-essential</li>
 
--- I prefer window manager instead of desktop environment. So I suggest you to
-install following 
-	* st - Minimalist terminal
-	* dmenu - application launcher
-	* dwm - Tiling window manager
-	* herbe - notification app
-	* scrot - screenshot app
-	* xpdf - pdf reader
-	* mocp - minimalist music player
-	* bluez bluez-tools - bluetooth
-	* mpv - video player
-	* redshift - blue light filter
-	* xbacklight - screen brightness
-	* go-mtpfs - mobile access
-	* feh - image viewer
-	* gv - ps viewer
-	* xfe - file manager (optional)
+	<li>I prefer window manager instead of desktop environment. So I suggest you to
+	install following 
+	<ul>
+	 <li>st - Minimalist terminal</li>
+	 <li>dmenu - application launcher</li>
 
--- Basic configuration files
+	 <li>dwm - Tiling window manager</li>
 
-###################################################################################
-=&gt; ~/.xinitrc
+	 <li> herbe - notification app</li>
 
+	 <li> scrot - screenshot app</li>
+
+	 <li> xpdf - pdf reader</li>
+
+	 <li> mocp - minimalist music player</li>
+
+	 <li> bluez bluez-tools - bluetooth</li>
+
+	 <li> mpv - video player</li>
+
+	 <li> redshift - blue light filter</li>
+
+	 <li> xbacklight - screen brightness</li>
+
+	 <li> go-mtpfs - mobile access</li>
+
+	 <li> feh - image viewer</li>
+
+	 <li> gv - ps viewer</li>
+
+	 <li> xfe - file manager (optional)</li>
+
+	</ul>
+	</li>
+	<hr>
+
+	<h2>
+		Basic configuration files
+	</h2>
+	<em>~/.xinitrc </em>
+	<pre>
 #!/usr/bin/bash
 
 # Set LED backlight
@@ -73,12 +135,10 @@ export AWT_TOOLKIT=MToolkit
 # Script for monitoring and displaying battery, volume and time information
 while true; do
         CHR=$(cat /sys/class/power_supply/BAT0/status)
-
         if [ &quot;$CHR&quot; = &quot;Discharging&quot; ]
         then
                 herbe &quot;BATTERY IS DOWN&quot;
         fi
-
         CLK=$( date +'%I:%M')
         volume=$(amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 |
 cut -d '%' -f 1)
@@ -96,11 +156,11 @@ xsetroot -solid '#000000'
 # 2&gt;/dev/null &amp;   # To suspend after 10 minutes
 
 exec dwm
+	</pre>
+	<hr>
 
-######################################################################################
-
-~/.aliases
-
+	<em> ~/.aliases</em>
+	<pre>
 # custom commands
 alias ..='cd ..'
 alias rm=&quot;rm -i&quot;
@@ -137,20 +197,19 @@ alias d=&quot;cd /mnt/WINDOWS/Users/admin/Documents/DATA-1&quot;
 alias h=&quot;cd /mnt/WINDOWS/Users/admin&quot;
 alias dw=&quot;cd ~/Downloads&quot;
 alias usb=&quot;cd /mnt/USB&quot;
-
-###############################################################################
-
-~/.bashrc
-
+	</pre>
+	<hr>
+	<em> ~/.bashrc</em>
+	<pre>
 source .aliases
 export PS1=&quot;\w $:&quot;
 export PATH=$PATH:~/.local/bin
 export EDITOR=vim
-
-###############################################################################
-
-# ~/.bash_profile
-
+	</pre>
+	
+	<hr>
+	<em> ~/.bash_profile</em>
+	<pre>
 # Load .bashrc for consistency
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
@@ -160,20 +219,22 @@ fi
 if [[ -z $DISPLAY ]] &amp;&amp; [[ $(tty) == /dev/tty1 ]]; then
     exec startx
 fi
+	</pre>
 
-###############################################################################
-~/.config/redshift/redshift.conf
-
+	<hr>
+	<em> ~/.config/redshift/redshift.conf</em>
+	<pre>
 [redshift]
 location-provider=manual
 
 [manual]
 lat=0.0
 lon=0.0
-###############################################################################
+	</pre>
 
-~/.config/mpv/input.conf
-
+	<hr>
+	<em> ~/.config/mpv/input.conf</em>
+	<pre>
 # --- Volume ---
 UP      add volume 5        # increase volume
 DOWN    add volume -5       # decrease volume
@@ -190,22 +251,18 @@ a     cycle audio          # cycle audio tracks
 SPACE     cycle pause          # pause / play
 f         cycle fullscreen     # toggle fullscreen
 q         quit                 # quit mpv
+	</pre>
 
-###############################################################################
-
-!/.config/mpv/mpv.conf
-
+	<hr>
+	<em>/.config/mpv/mpv.conf</em>
+	<pre>
 # to disable auto turnoff display
-
 stop-screensaver=yes
+	</pre>
 
-###############################################################################
-
-Custom script for wifi connection
-
-$ net &lt;name&gt;
-
-~/.local/bin/net
+	<hr>
+	<em> Custom script for wifi connection :- ~/.local/bin/net </em>
+	<pre>
 #!/bin/bash
 # Simple Wi-Fi switcher for home/office
 # Requires: wpa_supplicant, dhclient
@@ -250,22 +307,21 @@ echo &quot;[*] Connecting to Cable WiFi...&quot;
 echo &quot;Usage: wifi {moto|vivo|cable}&quot;
 ;;
 esac
+	</pre>
 
-###########################################################################
-
+	<hr>
 In /etc/wpa_supplicant/wpa_supplicant-name.conf
-
+	<pre>
 ctrl_interface=/run/wpa_supplicant
 network={
     ssid=&quot;xyz&quot;
     psk=&quot;password&quot;
 }
-
-##########################################################################
-
-custom script for bluetooth connection
-~/.local/bin/bt
-
+	</pre>
+	
+	<hr>
+	<em> custom script for bluetooth connection ~/.local/bin/bt </em>
+	<pre>
 #!/bin/bash
 # Connect to bluetooth device using bluetoothctl
 
@@ -287,23 +343,26 @@ connect $DEVICE
 sleep 2
 quit
 EOF
-
-#############################################################################
-
-Config file for theme and single column layout for moc
-
+	</pre>
+	<hr>
+	<em>
+	Config file for theme and single column layout for moc - ~/.moc/config
+	</em>
+	<pre>
 Theme =  black_theme
  Layout1 = playlist(50%,50%,50%,50%)
  Layout2 = &quot;&quot;
  Layout3 = &quot;&quot;
+	</pre>
 
-##############################################################################
-
+	<hr>
 Grub configuration for simple layout - 
--- sudo chmod -x 05_debian_theme 20_memtest86+ 30_uefi-firmware
--- Edit menu names in /boot/grub/grub.cfg
--- Edit /etc/default/grub file
-
+	<ul>
+		<li> sudo chmod -x 05_debian_theme 20_memtest86+ 30_uefi-firmware </li>
+		<li> Edit menu names in /boot/grub/grub.cfg </li>
+		<li> Edit /etc/default/grub file </li>
+	</ul>
+	<pre>
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR=`grep PRETTY_NAME /etc/lsb-release | cut -d= -f2 | cut -d\&quot; -f2
@@ -312,36 +371,37 @@ GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet selinux=0&quot;
 GRUB_CMDLINE_LINUX=&quot;&quot;
 GRUB_TERMINAL=console
 GRUB_DISABLE_SUBMENU=y
-
--- Run sudo update-grub
-
-###############################################################################
-
-To acess phone memory 
--- install go-mtpfs, libmtp
--- create a folder preferably in home directory for mounting
--- Use alias - phone_mount and phone_umount
--- Create/update /etc/udev/rules.d/51-android.rules
-
+	</pre>
+ Run sudo update-grub
+	
+	<hr>
+	To acess phone memory 
+	<ol>
+		<li> install go-mtpfs, libmtp </li>
+		<li> create a folder preferably in home directory for
+		mounting</li>
+		<li> Use alias - phone_mount and phone_umount </li>
+		<li> Create/update /etc/udev/rules.d/51-android.rules </li>
+	</ol>
+	<pre>
 SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;22b8&quot;, ATTR{idProduct}==&quot;2e82&quot;, MODE=&quot;0666&quot;,
 GROUP=&quot;plugdev&quot;
-
-##############################################################################
-
-To make xbacklight working
--- Create a file in /etc/X11/xorg.conf.d/20-video.conf
--- Write 
+	</pre>
+	
+	<hr>
+	To make xbacklight working, Create a file in /etc/X11/xorg.conf.d/20-video.conf
+	<pre>
 Section &quot;Device&quot;
     Identifier  &quot;Intel Graphics&quot;
     Driver      &quot;intel&quot;
     Option      &quot;Backlight&quot;  &quot;intel_backlight&quot;
 EndSection
+	</pre>
 
-###############################################################################
-
-To enable tap on click for touchpad
--- install xserver-xorg-input-synaptics
--- Edit/create file /etc/X11/xorg.conf.d/synaptic.conf
+	<hr>
+	To enable tap on click for touchpad, install
+	xserver-xorg-input-synaptics and  Edit/create file /etc/X11/xorg.conf.d/synaptic.conf
+	<pre>
 Section &quot;InputClass&quot;
         Identifier      &quot;Touchpad&quot;                      # required
         MatchIsTouchpad &quot;yes&quot;                           # required
@@ -363,33 +423,34 @@ Section &quot;InputClass&quot;
         Option          &quot;LBCornerButton&quot;        &quot;8&quot;     # browser &quot;back&quot; btn
         Option          &quot;RBCornerButton&quot;        &quot;9&quot;     # browser &quot;forward&quot; btn
 EndSection
+	</pre>
 
-###############################################################################
-
-For mounting USB when plugged and Windows partition during boot
-
--- Use alias usb_mount/umount
+	<hr>
+	For mounting USB when plugged and Windows partition during boot, Use alias usb_mount/umount
+	<pre>
 alias usb_mount=&quot;sudo mount -o umask=000 /dev/sdb1 /mnt/USB&quot;
 alias usb_umount=&quot;sudo umount /dev/sdb1&quot;
--- Edit /etc/fstab 
+	</pre>
+	 Edit /etc/fstab 
+	 <pre>
 UUID=XXXX /mnt/WINDOWS ntfs-3g defaults,noatime,uid=1000,gid=1000,umask=022 0 0
+	</pre>
 
-###############################################################################
+	<hr>
+	Keep only following daemons in run level 2 (run sysv-rc-conf)
+	<ol>
+	<li> bluetooth </li>
+	<li> dbus </li>
+	<li>pulseaudio</li>
+	<li>rc.local </li>
+	<li>seatd</li>
+	<li>sudo</li>
+	<li>tlp</li>
+	</ol>
 
-Keep only following daemons in run level 2 (run sysv-rc-conf)
-
---bluetooth
---dbus
---pulseaudio
---rc.local
---seatd
---sudo
---tlp
-
-###############################################################################
-
-dwm setup file - config.h
-
+	<hr>
+	<em> dwm setup file - config.h</em>
+	<pre>
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -407,7 +468,6 @@ static const char *colors[][3]      = {
         [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
         [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
-
 /* tagging */
 static const char *tags[] = { &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot; };
 
@@ -421,7 +481,6 @@ static const Rule rules[] = {
         { &quot;Gimp&quot;,     NULL,       NULL,       0,            1,           -1 },
         { &quot;Firefox&quot;,  NULL,       NULL,       1 &lt;&lt; 8,       0,           -1 },
 };
-
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95]
 */
@@ -438,7 +497,6 @@ static const Layout layouts[] = {
 */
         { &quot;[M]&quot;,      monocle },
 };
-
 /* key definitions */
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
@@ -532,10 +590,7 @@ mem | sudo tee /sys/power/state&quot;) },
         { ShiftMask,    XK_Print,   spawn,      {.v = scrotfocusedcmd } },
         { ControlMask,  XK_Print,   spawn,      SHCMD(&quot;sleep 1s;scrot --select&quot;)
 },
-
 };
-
-
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
@@ -565,15 +620,14 @@ static const Button buttons[] = {
         { ClkTagBar,            MODKEY,         Button3,        toggletag,
 {0} },
 };
+	</pre>
 
-#################################################################################
-
-# Configure mutt for gmail with 2FA. Generate app password from google account
-
-# Install mutt msmtp
-
-~/.muttrc
-
+	<hr>
+	Configure mutt for gmail with 2FA. Generate app password from google account
+	<br>
+	Install mutt msmtp
+	<em> ~/.muttrc </em>
+	<pre>
 # Identity
 set realname = &quot;Guruprasad&quot;
 set from = &quot;guruprasad.here@gmail.com&quot;
@@ -581,7 +635,7 @@ set use_from = yes
 
 # IMAP
 set imap_user = &quot;guruprasad.here@gmail.com&quot;
-set imap_pass = &quot;mxyl kudf hten ahrn&quot;
+set imap_pass = &quot;xxxxxxxxxxxxxx&quot;
 set folder = &quot;imaps://imap.gmail.com/&quot;
 set spoolfile = &quot;+INBOX&quot;
 
@@ -595,8 +649,9 @@ set mailcap_path   = ~/.mutt/mailcap
 auto_view text/html
 alternative_order text/plain text/html
 set sort_aux=last-date-received
-
-~/.config/msmtp/config
+	</pre>
+	<em>~/.config/msmtp/config</em>
+	<pre>
 defaults
 auth on
 tls on
@@ -608,12 +663,10 @@ host smtp.gmail.com
 port 587
 from guruprasad.here@gmail.com
 user guruprasad.here@gmail.com
-password mxyl kudf hten ahrn
+password xxxxxxx
 
 account default : gmail
-
-# chmod 600 ~/.muttrc ~/.config/msmtp/config
-
-#############################################################################</pre>
+	</pre>
+	<em> chmod 600 ~/.muttrc ~/.config/msmtp/config</em>
 </body>
 </html>
