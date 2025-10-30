@@ -29,3 +29,12 @@ img{
 	height:auto;
 
 }
+table {
+  width: 70%; /* Equivalent to width="70%" */
+    border-collapse: collapse; /* Equivalent to cellspacing="0" */
+    }
+
+td,th {
+      padding: 3px; /* Equivalent to cellpadding="3" */
+        border: 1px solid black; /* Example border, adjust as needed */
+	}
