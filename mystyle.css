@@ -1,39 +1,51 @@
-body{
+body	{
 	font-size : 9.5pt;
-	background-color: #ffffff;
+	background-color: #121212;
 	line-height : 140%;
 	text-align: justify;
 	text-justify: inter-word;
-	font-family : "Courier New", monospace;
+	font-family : monospace;
 	width : 80%;
 	margin: auto;
 	padding: 5px;
-	color: black;
-}
-nav{
-	font-size: 10pt;
-}
-h1{
-	font-size: 12pt;
-}
-h2{
-	font-size: 11pt;
-}
+	color:#F5F5F5 ;
+	}
 
-footer{
+nav	{
+	font-size: 10pt;
+	color: #00FF00;
+	}
+
+h1	{
+	font-size: 12pt;
+	color: #00FFFF;
+	}
+	
+h2	{
+	font-size: 11pt;
+	color: #00FFFF;
+	}
+
+a 	{
+        color: #FFFF00; 
+	}
+
+footer	{
 	text-align:center;
 	font-size:80%;
-}
-img{
+	}
+	
+img	{
 	max-width:100%;
 	height:auto;
-
-}
-table {
-  width: 70%; /* Equivalent to width="70%" */
-    border-collapse: collapse; /* Equivalent to cellspacing="0" */
-    }
-
-td,th {
-      padding: 3px; /* Equivalent to cellpadding="3" */
 	}
+
+table 	{
+  	width: 70%; 
+	border-collapse: collapse; 
+    	}
+
+td,th 	{
+      	padding: 3px; 
+	}
+	
